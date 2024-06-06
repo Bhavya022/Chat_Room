@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const { JWT_SECRET } = require('../config/env');
 
@@ -14,7 +14,7 @@ async function login(userId, password) {
   if (!user) {
     throw new Error('User not found');
   }
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcryptjs.compare(password, user.password);
   if (!isPasswordValid) {
     throw new Error('Invalid password');
   }
